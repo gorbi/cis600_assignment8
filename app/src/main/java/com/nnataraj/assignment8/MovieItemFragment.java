@@ -2,7 +2,7 @@ package com.nnataraj.assignment8;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 
 import com.nnataraj.assignment8.dummy.DummyContent;
 import com.nnataraj.assignment8.dummy.DummyContent.DummyItem;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
