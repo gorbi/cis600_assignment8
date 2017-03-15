@@ -1,6 +1,9 @@
 package com.nnataraj.assignment8;
 
+import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +55,15 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
+            }
+        });
+
+        final ImageView menuOverflow = (ImageView) holder.mView.findViewById(R.id.menu_moreoverflow);
+
+        menuOverflow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onMenuClick(v,holder.mItem);
             }
         });
     }
