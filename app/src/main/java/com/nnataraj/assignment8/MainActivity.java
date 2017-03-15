@@ -9,7 +9,10 @@ import android.view.MenuItem;
 
 import com.nnataraj.assignment8.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements MovieItemFragment.OnListFragmentInteractionListener, MovieItemDetailFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements MovieItemFragment.OnListFragmentInteractionListener {
+
+    public static final String MovieServerURL = "http://tyrant.local";
+    public static final String MovieIDURLPrefix = "/movies/id/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +51,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemFragment
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment, MovieItemDetailFragment.newInstance("",""))
+                .replace(R.id.fragment, MovieItemDetailFragment.newInstance(MovieServerURL+MovieIDURLPrefix+"alice"))
                 .commit();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }
