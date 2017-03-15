@@ -1,17 +1,16 @@
 package com.nnataraj.assignment8;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nnataraj.assignment8.dummy.DummyContent;
-import com.nnataraj.assignment8.dummy.DummyContent.DummyItem;
+import com.nnataraj.assignment8.MovieContent.MovieItem;
 
 /**
  * A fragment representing a list of Items.
@@ -21,10 +20,6 @@ import com.nnataraj.assignment8.dummy.DummyContent.DummyItem;
  */
 public class MovieItemFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -34,22 +29,16 @@ public class MovieItemFragment extends Fragment {
     public MovieItemFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static MovieItemFragment newInstance(int columnCount) {
-        MovieItemFragment fragment = new MovieItemFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+    public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+                                   RecyclerView.State state) {
+            if (parent.getChildAdapterPosition(view) == 0) {
+                outRect.top = 20;
+            }
+            outRect.bottom = 20;
+            outRect.left = 20;
+            outRect.right = 20;
         }
     }
 
@@ -62,12 +51,11 @@ public class MovieItemFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyMovieItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            MyMovieItemRecyclerViewAdapter myMovieItemRecyclerViewAdapter = new MyMovieItemRecyclerViewAdapter(mListener);
+            recyclerView.setAdapter(myMovieItemRecyclerViewAdapter);
+            recyclerView.addItemDecoration(new VerticalSpaceItemDecoration());
+            new UpdateMovieList(myMovieItemRecyclerViewAdapter).execute(MainActivity.MovieServerURL + MainActivity.EntireMovieList);
         }
         return view;
     }
@@ -101,7 +89,6 @@ public class MovieItemFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(MovieItem item);
     }
 }

@@ -6,8 +6,6 @@
     android:name="com.nnataraj.assignment8.MovieItemFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.nnataraj.assignment8.MovieItemFragment"
     tools:listitem="@layout/fragment_movieitem" />

@@ -25,6 +25,7 @@ public class MovieItemDetailFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
+     *
      * @param movieIDURL Parameter 1.
      * @return A new instance of fragment MovieItemDetailFragment.
      */

@@ -1,5 +1,6 @@
 package com.nnataraj.assignment8;
 
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -11,11 +12,13 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 
+import com.nnataraj.assignment8.MovieContent.MovieItem;
+
 /**
  * Created by nagaprasad on 3/14/17.
  */
 
-public class UpdateMovieDetail extends AsyncTask<String, Void, Movie> {
+public class UpdateMovieDetail extends AsyncTask<String, Void, MovieItem> {
 
     private final WeakReference<View> rootViewReference;
 
@@ -24,25 +27,25 @@ public class UpdateMovieDetail extends AsyncTask<String, Void, Movie> {
     }
 
     @Override
-    protected Movie doInBackground(String... params) {
+    protected MovieItem doInBackground(String... params) {
         try {
-            Movie movie = new Movie();
-            movie.data = new JSONObject(MyUtility.downloadJSONusingHTTPGetRequest(params[0]));
-            movie.image = MyUtility.downloadImageusingHTTPGetRequest(movie.data.getString("url"));
-            return movie;
+            MovieItem movieItem = new MovieItem();
+            movieItem.details = new JSONObject(MyUtility.downloadJSONusingHTTPGetRequest(params[0]));
+            movieItem.image = MyUtility.downloadImageusingHTTPGetRequest(movieItem.details.getString("url"));
+            return movieItem;
         } catch (Exception ae) {
-            Log.d("UpdateMovieDetail","Unable to fetch movie details from: "+params[0]);
+            Log.d("UpdateMovieDetail", "Unable to fetch movie details from: " + params[0]);
             ae.printStackTrace();
             return null;
         }
     }
 
     @Override
-    protected void onPostExecute(Movie movie) {
+    protected void onPostExecute(MovieItem movieItem) {
 
         final View rootView;
 
-        if (movie != null
+        if (movieItem != null
                 && ((rootView = rootViewReference.get()) != null)) {
 
             final TextView name = (TextView) rootView.findViewById(R.id.title);
@@ -55,16 +58,16 @@ public class UpdateMovieDetail extends AsyncTask<String, Void, Movie> {
             final ImageView imageView = (ImageView) rootView.findViewById(R.id.image);
 
             try {
-                name.setText(movie.data.getString("name"));
-                year.setText(movie.data.getString("year"));
-                length.setText(movie.data.getString("length"));
-                director.setText(movie.data.getString("director"));
-                cast.setText(movie.data.getString("stars"));
-                description.setText(movie.data.getString("description"));
-                ratingBar.setRating(((float) movie.data.getDouble("rating")) / 2f);
-                imageView.setImageBitmap(movie.image);
+                name.setText(movieItem.details.getString("name"));
+                year.setText(movieItem.details.getString("year"));
+                length.setText(movieItem.details.getString("length"));
+                director.setText(movieItem.details.getString("director"));
+                cast.setText(movieItem.details.getString("stars"));
+                description.setText(movieItem.details.getString("description"));
+                ratingBar.setRating(((float) movieItem.details.getDouble("rating")) / 2f);
+                imageView.setImageBitmap(movieItem.image);
             } catch (Exception ae) {
-                Log.d("UpdateMovieDetail","Unable to set movie details to view");
+                Log.d("UpdateMovieDetail", "Unable to set movie details to view");
                 ae.printStackTrace();
             }
 

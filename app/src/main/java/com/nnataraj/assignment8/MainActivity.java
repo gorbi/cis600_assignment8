@@ -1,17 +1,17 @@
 package com.nnataraj.assignment8;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.nnataraj.assignment8.dummy.DummyContent;
+import com.nnataraj.assignment8.MovieContent.MovieItem;
 
 public class MainActivity extends AppCompatActivity implements MovieItemFragment.OnListFragmentInteractionListener {
 
     public static final String MovieServerURL = "http://tyrant.local";
+    public static final String EntireMovieList = "/movies/";
     public static final String MovieIDURLPrefix = "/movies/id/";
 
     @Override
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemFragment
         setSupportActionBar(toolbar);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment, MovieItemFragment.newInstance(1))
+                .replace(R.id.fragment, new MovieItemFragment())
                 .commit();
     }
 
@@ -49,9 +49,13 @@ public class MainActivity extends AppCompatActivity implements MovieItemFragment
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment, MovieItemDetailFragment.newInstance(MovieServerURL+MovieIDURLPrefix+"alice"))
-                .commit();
+    public void onListFragmentInteraction(MovieItem item) {
+        try {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment, MovieItemDetailFragment.newInstance(MovieServerURL + MovieIDURLPrefix + item.details.getString("id")))
+                    .commit();
+        } catch (Exception ae) {
+            //Ignore
+        }
     }
 }

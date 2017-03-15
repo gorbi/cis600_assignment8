@@ -4,25 +4,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.nnataraj.assignment8.MovieItemFragment.OnListFragmentInteractionListener;
-import com.nnataraj.assignment8.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.nnataraj.assignment8.MovieContent.MovieItem;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link MovieItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovieItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyMovieItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyMovieItemRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
         mListener = listener;
     }
 
@@ -35,9 +33,16 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mItem = MovieContent.ITEMS.get(position);
+        try {
+            holder.mTitle.setText(holder.mItem.details.getString("name"));
+            holder.mDescription.setText(holder.mItem.details.getString("description"));
+            holder.mIcon.setImageBitmap(holder.mItem.image);
+            holder.mRatingBar.setRating(((float) holder.mItem.details.getDouble("rating")) / 2f);
+            holder.mYear.setText(holder.mItem.details.getString("year"));
+        } catch (Exception ae) {
+            //Ignore
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,25 +58,26 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return MovieContent.ITEMS.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mTitle;
+        public final TextView mDescription;
+        public final ImageView mIcon;
+        public final TextView mYear;
+        public final RatingBar mRatingBar;
+        public MovieItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            mTitle = (TextView) view.findViewById(R.id.title);
+            mDescription = (TextView) view.findViewById(R.id.description);
+            mIcon = (ImageView) view.findViewById(R.id.movie_icon);
+            mYear = (TextView) view.findViewById(R.id.year);
+            mRatingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         }
     }
 }
