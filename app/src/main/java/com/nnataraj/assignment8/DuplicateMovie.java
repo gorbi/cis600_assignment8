@@ -36,9 +36,13 @@ public class DuplicateMovie extends AsyncTask<String, Void, Integer> {
             String res = MyUtility.sendHttPostRequest(MovieServerURL + MovieAddSuffix, params[0]);
 
             JSONObject result = new JSONObject(res);
-            if (result.getInt("affected_rows") > 0)
-                return Integer.parseInt(params[1]);
-            else
+            if (result.getInt("affected_rows") > 0) {
+                int pos = Integer.parseInt(params[1]);
+                MovieContent.MovieItem item = MovieContent.ITEMS.get(pos);
+                item.details.put("id",item.details.getString("id")+"_new");
+                MovieContent.ITEMS.add(pos+1,MovieContent.ITEMS.get(pos));
+                return pos;
+            } else
                 return -1;
         } catch (Exception ae) {
             return -1;

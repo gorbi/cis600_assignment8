@@ -124,7 +124,7 @@ public class MovieItemFragment extends Fragment {
                                                         +"&url="+movieItem.details.getString("url"), String.valueOf(position));
                                         return true;
                                     case R.id.delete:
-                                        Log.e("NAGA", "Delete " + movieItem.details.getString("name"));
+                                        Log.e("NAGA", "Delete " + movieItem.details.getString("id"));
                                         return true;
                                 }
                             } catch (JSONException ae) {
