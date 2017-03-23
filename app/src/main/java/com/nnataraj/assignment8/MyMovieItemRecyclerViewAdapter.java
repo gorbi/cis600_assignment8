@@ -21,10 +21,15 @@ import com.nnataraj.assignment8.MovieContent.MovieItem;
  */
 public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovieItemRecyclerViewAdapter.ViewHolder> {
 
-    private final OnListFragmentInteractionListener mListener;
+    private final OnListFragmentInteractionListener mFListener;
+    private OnListInteractionListener mListener;
 
     public MyMovieItemRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
-        mListener = listener;
+        mFListener = listener;
+    }
+
+    public void setOnListInteractionListener(OnListInteractionListener mListener) {
+        this.mListener = mListener;
     }
 
     @Override
@@ -35,7 +40,7 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = MovieContent.ITEMS.get(position);
         try {
             holder.mTitle.setText(holder.mItem.details.getString("name"));
@@ -53,7 +58,7 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mFListener.onListFragmentInteraction(holder.mItem);
                 }
             }
         });
@@ -63,7 +68,7 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
         menuOverflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onMenuClick(v,holder.mItem);
+                mListener.onOverflowMenuClick(v,holder.mItem,position);
             }
         });
     }
