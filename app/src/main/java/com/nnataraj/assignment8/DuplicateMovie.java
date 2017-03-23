@@ -51,7 +51,7 @@ public class DuplicateMovie extends AsyncTask<String, Void, Integer> {
             final MyMovieItemRecyclerViewAdapter myMovieItemRecyclerViewAdapter;
             if ((myMovieItemRecyclerViewAdapter = myMovieItemRecyclerViewAdapterReference.get()) != null) {
                 //myMovieItemRecyclerViewAdapter.notifyDataSetChanged();
-                myMovieItemRecyclerViewAdapter.notifyItemInserted(integer);
+                myMovieItemRecyclerViewAdapter.notifyItemInserted(integer+1);
             }
         } else {
             final Context context;
