@@ -192,4 +192,37 @@ public class MyUtility {
         if (httpConnection != null) httpConnection.disconnect();
         return null;
     }
+
+    // Send empty HTTP POST Request
+    public static String sendHttPostRequest(String urlString) {
+        HttpURLConnection httpConnection = null;
+        try {
+            URL url = new URL(urlString);
+            httpConnection = (HttpURLConnection) url.openConnection();
+
+            httpConnection.setDoOutput(true);
+            httpConnection.setChunkedStreamingMode(0);
+
+            if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                Log.d("MyDebugMsg:PostRequest", "POST request returns ok");
+                InputStream stream = httpConnection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuffer result = new StringBuffer();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    Log.d("MyDebugMsg:PostRequest", line);  // for debugging purpose
+                    result.append(line);
+                }
+                reader.close();
+                if (httpConnection != null) httpConnection.disconnect();
+                return result.toString();
+            } else Log.d("MyDebugMsg:PostRequest", "POST request returns error");
+        } catch (Exception ex) {
+            Log.d("MyDebugMsg", "Exception in sendHttpPostRequest");
+            ex.printStackTrace();
+        }
+
+        if (httpConnection != null) httpConnection.disconnect();
+        return null;
+    }
 }

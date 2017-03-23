@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -110,7 +109,7 @@ public class MovieItemFragment extends Fragment {
                             try {
                                 switch (menuItem.getItemId()) {
                                     case R.id.duplicate:
-                                        //Log.e("NAGA", "Duplicate " + movieItem.details.getString("name"));
+                                        Log.d("NAGA", "Duplicate " + movieItem.details.getString("id"));
                                         new DuplicateMovie(getActivity(),myMovieItemRecyclerViewAdapter,movieItem.details.getString("name"))
                                                 .execute("id="+movieItem.details.getString("id")+"_new"
                                                         +"&name="+movieItem.details.getString("name")
@@ -124,7 +123,10 @@ public class MovieItemFragment extends Fragment {
                                                         +"&url="+movieItem.details.getString("url"), String.valueOf(position));
                                         return true;
                                     case R.id.delete:
-                                        Log.e("NAGA", "Delete " + movieItem.details.getString("id"));
+                                        Log.d("NAGA", "Delete " + movieItem.details.getString("id"));
+                                        new DeleteMovie(getActivity(),myMovieItemRecyclerViewAdapter,movieItem.details.getString("name"))
+                                                .execute(MainActivity.MovieServerURL+MainActivity.DeleteMoviePrefix+movieItem.details.getString("id")
+                                                        ,String.valueOf(position));
                                         return true;
                                 }
                             } catch (JSONException ae) {

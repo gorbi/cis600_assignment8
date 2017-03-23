@@ -2,18 +2,11 @@ package com.nnataraj.assignment8;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.nnataraj.assignment8.MovieContent.MovieItem;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements MovieItemFragment.OnListFragmentInteractionListener {
 
@@ -22,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemFragment
     public static final String MovieIDURLPrefix = "/movies/id/";
     public static final String MovieRatingURLPrefix = "/movies/rating/";
     public static final String MovieAddSuffix = "/add";
+    public static final String DeleteMoviePrefix= "/delete/id/";
 
     // String forrestGumpImageURL = "http://ia.media-imdb.com/images/M/MV5BYThjM2MwZGMtMzg3Ny00NGRkLWE4M2EtYTBiNWMzOTY0YTI4XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX214_AL_.jpg";
 
