@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 
+import static com.nnataraj.assignment8.MainActivity.EntireMovieList;
 import static com.nnataraj.assignment8.MainActivity.MovieAddSuffix;
 import static com.nnataraj.assignment8.MainActivity.MovieServerURL;
 
@@ -37,11 +38,9 @@ class DuplicateMovie extends AsyncTask<String, Void, Integer> {
 
             JSONObject result = new JSONObject(res);
             if (result.getInt("affected_rows") > 0) {
-                int pos = Integer.parseInt(params[1]);
-                MovieContent.MovieItem item = MovieContent.ITEMS.get(pos);
-                item.details.put("id", item.details.getString("id") + "_new");
-                MovieContent.ITEMS.add(pos + 1, MovieContent.ITEMS.get(pos));
-                return pos;
+                if (!MovieContent.updateITEMS(MovieServerURL + EntireMovieList))
+                    return -2;
+                return Integer.parseInt(params[1]);
             } else
                 return -1;
         } catch (Exception ae) {
@@ -51,16 +50,22 @@ class DuplicateMovie extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer integer) {
-        if (integer != -1) {
-            final MyMovieItemRecyclerViewAdapter myMovieItemRecyclerViewAdapter;
-            if ((myMovieItemRecyclerViewAdapter = myMovieItemRecyclerViewAdapterReference.get()) != null) {
-                myMovieItemRecyclerViewAdapter.notifyDataSetChanged();
-                //myMovieItemRecyclerViewAdapter.notifyItemInserted(integer+1);
-            }
-        } else {
-            final Context context;
-            if ((context = contextReference.get()) != null)
-                Toast.makeText(context, "Unable to duplicate movie: " + movieName, Toast.LENGTH_SHORT).show();
+        final Context context;
+        switch (integer) {
+            case -1:
+                if ((context = contextReference.get()) != null)
+                    Toast.makeText(context, "Unable to duplicate movie: " + movieName, Toast.LENGTH_SHORT).show();
+                break;
+            case -2:
+                if ((context = contextReference.get()) != null)
+                    Toast.makeText(context, "Unable to refresh local content however duplication of movie " + movieName + " was successful, please reload the app", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                final MyMovieItemRecyclerViewAdapter myMovieItemRecyclerViewAdapter;
+                if ((myMovieItemRecyclerViewAdapter = myMovieItemRecyclerViewAdapterReference.get()) != null) {
+                    myMovieItemRecyclerViewAdapter.notifyDataSetChanged();
+                    //myMovieItemRecyclerViewAdapter.notifyItemInserted(integer+1);
+                }
         }
     }
 }

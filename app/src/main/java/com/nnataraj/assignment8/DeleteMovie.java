@@ -8,11 +8,15 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 
+import static com.nnataraj.assignment8.MainActivity.EntireMovieList;
+import static com.nnataraj.assignment8.MainActivity.MovieServerURL;
+
 /**
+ * Deletion of Movie
  * Created by nagaprasad on 3/23/17.
  */
 
-public class DeleteMovie extends AsyncTask<String, Void, Integer> {
+class DeleteMovie extends AsyncTask<String, Void, Integer> {
 
     private final WeakReference<Context> contextReference;
     private final WeakReference<MyMovieItemRecyclerViewAdapter> myMovieItemRecyclerViewAdapterReference;
@@ -33,9 +37,9 @@ public class DeleteMovie extends AsyncTask<String, Void, Integer> {
 
             JSONObject result = new JSONObject(res);
             if (result.getInt("affected_rows") > 0) {
-                int pos = Integer.parseInt(params[1]);
-                MovieContent.ITEMS.remove(pos);
-                return pos;
+                if (!MovieContent.updateITEMS(MovieServerURL + EntireMovieList))
+                    return -2;
+                return Integer.parseInt(params[1]);
             } else
                 return -1;
         } catch (Exception ae) {
@@ -45,16 +49,22 @@ public class DeleteMovie extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer integer) {
-        if (integer != -1) {
-            final MyMovieItemRecyclerViewAdapter myMovieItemRecyclerViewAdapter;
-            if ((myMovieItemRecyclerViewAdapter = myMovieItemRecyclerViewAdapterReference.get()) != null) {
-                myMovieItemRecyclerViewAdapter.notifyDataSetChanged();
-                //myMovieItemRecyclerViewAdapter.notifyItemRemoved(integer);
-            }
-        } else {
-            final Context context;
-            if ((context = contextReference.get()) != null)
-                Toast.makeText(context, "Unable to delete movie: " + movieName, Toast.LENGTH_SHORT).show();
+        final Context context;
+        switch (integer) {
+            case -1:
+                if ((context = contextReference.get()) != null)
+                    Toast.makeText(context, "Unable to duplicate movie: " + movieName, Toast.LENGTH_SHORT).show();
+                break;
+            case -2:
+                if ((context = contextReference.get()) != null)
+                    Toast.makeText(context, "Unable to refresh local content however deletion of movie " + movieName + " was successful, please reload the app", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                final MyMovieItemRecyclerViewAdapter myMovieItemRecyclerViewAdapter;
+                if ((myMovieItemRecyclerViewAdapter = myMovieItemRecyclerViewAdapterReference.get()) != null) {
+                    myMovieItemRecyclerViewAdapter.notifyDataSetChanged();
+                    //myMovieItemRecyclerViewAdapter.notifyItemInserted(integer+1);
+                }
         }
     }
 }
