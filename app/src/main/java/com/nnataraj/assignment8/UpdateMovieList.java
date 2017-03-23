@@ -9,17 +9,16 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nnataraj.assignment8.MovieContent.MovieItem;
-
 /**
+ * Updates Movie List
  * Created by nagaprasad on 3/14/17.
  */
-public class UpdateMovieList extends AsyncTask<String, Void, Boolean> {
+class UpdateMovieList extends AsyncTask<String, Void, Boolean> {
 
     private final WeakReference<MyMovieItemRecyclerViewAdapter> movieItemRecyclerViewAdapterReference;
 
     UpdateMovieList(final MyMovieItemRecyclerViewAdapter movieItemRecyclerViewAdapter) {
-        movieItemRecyclerViewAdapterReference = new WeakReference(movieItemRecyclerViewAdapter);
+        movieItemRecyclerViewAdapterReference = new WeakReference<>(movieItemRecyclerViewAdapter);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class UpdateMovieList extends AsyncTask<String, Void, Boolean> {
     protected void onPostExecute(Boolean success) {
         final MyMovieItemRecyclerViewAdapter movieItemRecyclerViewAdapter;
 
-        if (success == true
+        if (success
                 && ((movieItemRecyclerViewAdapter = movieItemRecyclerViewAdapterReference.get()) != null)) {
             movieItemRecyclerViewAdapter.notifyDataSetChanged();
         }

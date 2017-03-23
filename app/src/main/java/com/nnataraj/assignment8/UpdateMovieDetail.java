@@ -1,6 +1,5 @@
 package com.nnataraj.assignment8;
 
-
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -15,15 +14,15 @@ import java.lang.ref.WeakReference;
 import com.nnataraj.assignment8.MovieContent.MovieItem;
 
 /**
+ * Deletion of Movie
  * Created by nagaprasad on 3/14/17.
  */
-
-public class UpdateMovieDetail extends AsyncTask<String, Void, MovieItem> {
+class UpdateMovieDetail extends AsyncTask<String, Void, MovieItem> {
 
     private final WeakReference<View> rootViewReference;
 
     UpdateMovieDetail(final View rootView) {
-        rootViewReference = new WeakReference(rootView);
+        rootViewReference = new WeakReference<>(rootView);
     }
 
     @Override

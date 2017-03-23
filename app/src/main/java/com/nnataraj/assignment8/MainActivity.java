@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemFragment
     public static final String MovieIDURLPrefix = "/movies/id/";
     public static final String MovieRatingURLPrefix = "/movies/rating/";
     public static final String MovieAddSuffix = "/add";
-    public static final String DeleteMoviePrefix= "/delete/id/";
+    public static final String DeleteMoviePrefix = "/delete/id/";
 
     // String forrestGumpImageURL = "http://ia.media-imdb.com/images/M/MV5BYThjM2MwZGMtMzg3Ny00NGRkLWE4M2EtYTBiNWMzOTY0YTI4XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SX214_AL_.jpg";
 

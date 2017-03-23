@@ -12,10 +12,11 @@ import static com.nnataraj.assignment8.MainActivity.MovieAddSuffix;
 import static com.nnataraj.assignment8.MainActivity.MovieServerURL;
 
 /**
+ * Duplication of Movie
  * Created by nagaprasad on 3/20/17.
  */
 
-public class DuplicateMovie extends AsyncTask<String, Void, Integer> {
+class DuplicateMovie extends AsyncTask<String, Void, Integer> {
 
     private final WeakReference<Context> contextReference;
     private final WeakReference<MyMovieItemRecyclerViewAdapter> myMovieItemRecyclerViewAdapterReference;
@@ -38,8 +39,8 @@ public class DuplicateMovie extends AsyncTask<String, Void, Integer> {
             if (result.getInt("affected_rows") > 0) {
                 int pos = Integer.parseInt(params[1]);
                 MovieContent.MovieItem item = MovieContent.ITEMS.get(pos);
-                item.details.put("id",item.details.getString("id")+"_new");
-                MovieContent.ITEMS.add(pos+1,MovieContent.ITEMS.get(pos));
+                item.details.put("id", item.details.getString("id") + "_new");
+                MovieContent.ITEMS.add(pos + 1, MovieContent.ITEMS.get(pos));
                 return pos;
             } else
                 return -1;

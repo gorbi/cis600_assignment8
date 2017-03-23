@@ -38,7 +38,7 @@ public class MovieItemFragment extends Fragment {
     public MovieItemFragment() {
     }
 
-    public class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
+    private class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
                                    RecyclerView.State state) {
@@ -63,7 +63,7 @@ public class MovieItemFragment extends Fragment {
             search.setOnCloseListener(new SearchView.OnCloseListener() {
                 @Override
                 public boolean onClose() {
-                    Log.d("NAGA","onClose");
+                    Log.d("NAGA", "onClose");
                     return true;
                 }
             });
@@ -101,8 +101,8 @@ public class MovieItemFragment extends Fragment {
             myMovieItemRecyclerViewAdapter.setOnListInteractionListener(new OnListInteractionListener() {
                 @Override
                 public void onOverflowMenuClick(View view, final MovieItem movieItem, final int position) {
-                    PopupMenu popupMenu = new PopupMenu(getActivity(),view);
-                    popupMenu.getMenuInflater().inflate(R.menu.popup,popupMenu.getMenu());
+                    PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+                    popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -110,23 +110,23 @@ public class MovieItemFragment extends Fragment {
                                 switch (menuItem.getItemId()) {
                                     case R.id.duplicate:
                                         Log.d("NAGA", "Duplicate " + movieItem.details.getString("id"));
-                                        new DuplicateMovie(getActivity(),myMovieItemRecyclerViewAdapter,movieItem.details.getString("name"))
-                                                .execute("id="+movieItem.details.getString("id")+"_new"
-                                                        +"&name="+movieItem.details.getString("name")
-                                                        +"&description="+movieItem.details.getString("description")
-                                                        +"&stars="+movieItem.details.getString("stars")
-                                                        +"&length="+movieItem.details.getString("length")
-                                                        +"&image="+movieItem.details.getString("image")
-                                                        +"&year="+movieItem.details.getString("year")
-                                                        +"&rating="+movieItem.details.getString("rating")
-                                                        +"&director="+movieItem.details.getString("director")
-                                                        +"&url="+movieItem.details.getString("url"), String.valueOf(position));
+                                        new DuplicateMovie(getActivity(), myMovieItemRecyclerViewAdapter, movieItem.details.getString("name"))
+                                                .execute("id=" + movieItem.details.getString("id") + "_new"
+                                                        + "&name=" + movieItem.details.getString("name")
+                                                        + "&description=" + movieItem.details.getString("description")
+                                                        + "&stars=" + movieItem.details.getString("stars")
+                                                        + "&length=" + movieItem.details.getString("length")
+                                                        + "&image=" + movieItem.details.getString("image")
+                                                        + "&year=" + movieItem.details.getString("year")
+                                                        + "&rating=" + movieItem.details.getString("rating")
+                                                        + "&director=" + movieItem.details.getString("director")
+                                                        + "&url=" + movieItem.details.getString("url"), String.valueOf(position));
                                         return true;
                                     case R.id.delete:
                                         Log.d("NAGA", "Delete " + movieItem.details.getString("id"));
-                                        new DeleteMovie(getActivity(),myMovieItemRecyclerViewAdapter,movieItem.details.getString("name"))
-                                                .execute(MainActivity.MovieServerURL+MainActivity.DeleteMoviePrefix+movieItem.details.getString("id")
-                                                        ,String.valueOf(position));
+                                        new DeleteMovie(getActivity(), myMovieItemRecyclerViewAdapter, movieItem.details.getString("name"))
+                                                .execute(MainActivity.MovieServerURL + MainActivity.DeleteMoviePrefix + movieItem.details.getString("id")
+                                                        , String.valueOf(position));
                                         return true;
                                 }
                             } catch (JSONException ae) {
@@ -172,7 +172,7 @@ public class MovieItemFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
+    interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(MovieItem item);
     }
 }

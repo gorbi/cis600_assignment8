@@ -1,12 +1,10 @@
 package com.nnataraj.assignment8;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +12,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class MovieItemDetailFragment extends Fragment {
+
     private static final String ARG_MOVIEIDURL = "movieIDURL";
 
     private String mMovieIDURL;

@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/MovieFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +8,7 @@
     android:paddingTop="10dp">
 
     <ImageView
+        android:contentDescription="@string/movie_image_desc"
         android:id="@+id/image"
         android:layout_width="170dp"
         android:layout_height="220dp" />
@@ -18,8 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@id/image"
-        android:textSize="25dp"
+        android:layout_toEndOf="@id/image"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/title"
-        android:layout_toRightOf="@id/image" />
+        android:layout_toEndOf="@id/image" />
 
     <TextView
         android:id="@+id/length"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/year"
-        android:layout_toRightOf="@id/image" />
+        android:layout_toEndOf="@id/image" />
 
     <TextView
         android:id="@+id/cast"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/length"
-        android:layout_toRightOf="@id/image" />
+        android:layout_toEndOf="@id/image" />
 
     <TextView
         android:id="@+id/director"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/cast"
-        android:layout_toRightOf="@id/image" />
+        android:layout_toEndOf="@id/image" />
 
     <RatingBar
         android:id="@+id/ratingBar"

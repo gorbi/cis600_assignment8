@@ -1,9 +1,6 @@
 package com.nnataraj.assignment8;
 
-import android.content.Context;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +16,16 @@ import com.nnataraj.assignment8.MovieContent.MovieItem;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovieItemRecyclerViewAdapter.ViewHolder> {
+class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovieItemRecyclerViewAdapter.ViewHolder> {
 
     private final OnListFragmentInteractionListener mFListener;
     private OnListInteractionListener mListener;
 
-    public MyMovieItemRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
+    MyMovieItemRecyclerViewAdapter(OnListFragmentInteractionListener listener) {
         mFListener = listener;
     }
 
-    public void setOnListInteractionListener(OnListInteractionListener mListener) {
+    void setOnListInteractionListener(OnListInteractionListener mListener) {
         this.mListener = mListener;
     }
 
@@ -40,8 +37,9 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = MovieContent.ITEMS.get(position);
+        final int pos = position;
         try {
             holder.mTitle.setText(holder.mItem.details.getString("name"));
             holder.mDescription.setText(holder.mItem.details.getString("description"));
@@ -68,7 +66,7 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
         menuOverflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onOverflowMenuClick(v,holder.mItem,position);
+                mListener.onOverflowMenuClick(v, holder.mItem, pos);
             }
         });
     }
@@ -78,16 +76,16 @@ public class MyMovieItemRecyclerViewAdapter extends RecyclerView.Adapter<MyMovie
         return MovieContent.ITEMS.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mTitle;
-        public final TextView mDescription;
-        public final ImageView mIcon;
-        public final TextView mYear;
-        public final RatingBar mRatingBar;
-        public MovieItem mItem;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        final View mView;
+        final TextView mTitle;
+        final TextView mDescription;
+        final ImageView mIcon;
+        final TextView mYear;
+        final RatingBar mRatingBar;
+        MovieItem mItem;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
             mTitle = (TextView) view.findViewById(R.id.title);
