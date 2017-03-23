@@ -24,22 +24,22 @@ public class UpdateMovieList extends AsyncTask<String, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(String... params) {
-        List<MovieItem> resultMovieList = new ArrayList<>();
         try {
             JSONArray movieList = new JSONArray(MyUtility.downloadJSONusingHTTPGetRequest(params[0]));
+            List<MovieContent.MovieItem> resultMovieList = new ArrayList<>();
             for (int i = 0; i < movieList.length(); i++) {
-                MovieItem movieItem = new MovieItem();
+                MovieContent.MovieItem movieItem = new MovieContent.MovieItem();
                 movieItem.details = movieList.getJSONObject(i);
                 movieItem.image = MyUtility.downloadImageusingHTTPGetRequest(movieItem.details.getString("url"));
                 resultMovieList.add(movieItem);
             }
+            MovieContent.ITEMS = resultMovieList;
+            return true;
         } catch (Exception ae) {
             Log.d("UpdateMovieList", "Unable to fetch movie list from: " + params[0]);
             ae.printStackTrace();
             return false;
         }
-        MovieContent.ITEMS = resultMovieList;
-        return true;
     }
 
     @Override
