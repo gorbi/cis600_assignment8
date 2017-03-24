@@ -28,6 +28,8 @@ import org.json.JSONException;
  */
 public class MovieItemFragment extends Fragment {
 
+    private static boolean refreshMovies = false;
+
     private OnListFragmentInteractionListener mListener;
     private MyMovieItemRecyclerViewAdapter myMovieItemRecyclerViewAdapter;
 
@@ -56,22 +58,22 @@ public class MovieItemFragment extends Fragment {
         if (menu.findItem(R.id.action_search) == null)
             inflater.inflate(R.menu.menu_main, menu);
         SearchView search = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        if (refreshMovies) {
+            MovieContent.ITEMS.clear();
+            new UpdateMovieList(myMovieItemRecyclerViewAdapter).execute(MainActivity.MovieServerURL + MainActivity.EntireMovieList);
+            refreshMovies = false;
+        }
+
         if (search != null) {
 
             search.setQueryHint("Rating...");
-
-            search.setOnCloseListener(new SearchView.OnCloseListener() {
-                @Override
-                public boolean onClose() {
-                    Log.d("NAGA", "onClose");
-                    return true;
-                }
-            });
 
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     new UpdateMovieList(myMovieItemRecyclerViewAdapter).execute(MainActivity.MovieServerURL + MainActivity.MovieRatingURLPrefix + query);
+                    refreshMovies = true;
                     return true;
                 }
 
